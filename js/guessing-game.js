@@ -99,6 +99,14 @@ function playGame() {
   const submitButton = document.getElementById('submit');
   const hintButton = document.getElementById('hint');
   const resetButton = document.getElementById('reset');
+  const input = document.getElementById('player-input');
+
+
+  input.addEventListener("keyup", event => {
+    if (event.keyCode === 13) {
+      submitButton.click();
+    }
+  });
 
   submitButton.addEventListener('click', () => {
     const currentGuess = +document.getElementById('player-input').value;
@@ -119,6 +127,9 @@ function playGame() {
       document.querySelector(`#guess-list li:nth-child(${i})`).innerHTML = `_`;
     }
   });
+
+  
+
 }
 
 playGame();
