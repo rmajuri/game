@@ -33,6 +33,10 @@ h3 {
   position: relative;
 }
 
+input:focus, button:focus {
+  outline: none;
+}
+
 #guess-feedback {
   position: absolute;
   font-family: 'Indie Flower', cursive;
