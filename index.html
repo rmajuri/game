@@ -5,31 +5,56 @@
     <meta charset="UTF-8">
     <title>Guessing Game</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen|PT+Sans+Narrow" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <!-- the MAIN.CSS file is linked here -->
   </head>
   <body>
 
-    <h1>Guess the Number</h1>
-    <h3>Between 1 and 100</h3>
+    <div id="app">
 
-  <form>
-    <input type="text" placeholder="#">
-  </form>
+      <div class="center">
+        <h1>Guess the Number</h1>
+        <h3>1 through 100.</h3>
+      </div>
+
     
-   
+      <div id="input-parent" class="center">
+        <input id="player-input" type="text"  maxlength="3" autofocus placeholder="#">
+        <button id="submit">Go!</button>
+        <div id="guess-feedback"><h4>You've got 5 guesses!</h4></div>
+      </div>
+    
+      <div class="center">
+        <ul id="guess-list">
+          <li class="guess">_</li>
+          <li class="guess">_</li>
+          <li class="guess">_</li>
+          <li class="guess">_</li>
+          <li class="guess">_</li>
+        </ul>
+      </div>
 
+      <div id="button-container" class="center">
+        <button id="hint">Hint</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+
+  <div id="footer" class="footer">
+    <img id="img1" src="https://cloud.fullstackacademy.com/fullstack-academy-logo-color-on-white.png?mtime=20160802141645" alt="Fullstack Academy Logo">
+    <img id="img2" src="https://rjefw55j9d-flywheel.netdna-ssl.com/wp-content/uploads/2017/05/grace-hopper-logo-color-on-white.png" alt="Grace Hopper Academy Logo">
+    <h4>Project by Robert Majuri</h4></a>
+  </div>
   
-
- 
-  
-
-    <div id="footer" class="center">
-      <img id="img1" src="https://cloud.fullstackacademy.com/fullstack-academy-logo-color-on-white.png?mtime=20160802141645" alt="Fullstack Academy Logo">
-      <img id="img2" src="https://rjefw55j9d-flywheel.netdna-ssl.com/wp-content/uploads/2017/05/grace-hopper-logo-color-on-white.png" alt="Grace Hopper Academy Logo">
-      <h4>Project by Robert Majuri</h4></a>
-   </div>
-
     <script src='js/guessing-game.js'></script>
     <!-- uncomment the script tag above when you are ready to add JavaScript to your document -->
   </body>
 </html>
+
+
+
+
+
+
+

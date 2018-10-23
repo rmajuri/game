@@ -8,8 +8,6 @@ a user clicks a button or adds a guess to the input field.
 
 */
 
-
-
 class Game {
   constructor() {
     this.playersGuess = null;
@@ -20,39 +18,50 @@ class Game {
     return Math.abs(this.winningNumber - this.playersGuess);
   }
   playersGuessSubmission(guess) {
-    let newGuess = Number.parseInt(guess, 10);
-    if (typeof newGuess !== 'number' || newGuess < 1 || newGuess > 100) {
-      throw 'That is an invalid guess.'
-    } 
-    this.playersGuess = newGuess;
-    return this.checkGuess();
+    if (guess === 'reset') {
+      document.querySelector('#guess-feedback').innerHTML = 'You\'ve got 5 guesses!';
+    } else {
+      let newGuess = Number.parseInt(guess, 10);
+      if (Number.isNaN(newGuess) || newGuess < 1 || newGuess > 100) {
+        document.querySelector('#guess-feedback').innerHTML = 'That is an invalid guess.';
+      } else {
+        this.playersGuess = newGuess;
+        return this.checkGuess();
+      }
+    }
   }
   checkGuess() {
     let message = '';
 
     if (this.pastGuesses[this.pastGuesses.length - 1] === this.winningNumber) {
-      message = 'You Win!';
+        message = 'You Win!';
     } else if (this.pastGuesses.length === 5) {
-      message = 'You Lose.';
+        message = 'You Lose.';
     } else if (this.pastGuesses.includes(this.playersGuess)) {
-      message = 'You have already guessed that number.'
+        message = 'You have already guessed that number.'
     } else {
       let difference = this.difference();
-      this.pastGuesses.push(this.playersGuess);
+      if (this.pastGuesses.length < 5) {
+        this.pastGuesses.push(this.playersGuess);
+        document.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`).innerHTML = this.playersGuess;
+      }
       if (this.pastGuesses.length === 5 && this.playersGuess !== this.winningNumber) {
-        message = 'You Lose.';
+          message = 'You Lose.';
       } else if (this.playersGuess === this.winningNumber) {
-        message = 'You Win!';
+          message = 'You Win!';
       } else if (difference < 10) {
-        message = 'You\'re burning up!';
+          message = 'You\'re burning up!';
       } else if (difference < 25) {
-        message = 'You\'re lukewarm.';
+          message = 'You\'re lukewarm.';
       } else if (difference < 50) {
-        message = 'You\'re a bit chilly.';
+          message = 'You\'re a bit chilly.';
       } else {
-        message = 'You\'re ice cold!';
+          message = 'You\'re ice cold!';
       }
     }
+
+    document.querySelector('#guess-feedback').innerHTML = message;
+
     return message;
   }
   provideHint() {
@@ -75,25 +84,41 @@ let randomIdx;
     array[n] = array[randomIdx];
     array[randomIdx] = currentEl;
   }
- return array.join(', ');
+  const hint = `Could be ${array[0]}. Or ${array[1]}. But maybe ${array[2]}.`
+ return hint;
 }
 
 function newGame() {
   return new Game;
 }
 
-
 function playGame() {
-    let game = newGame();
 
-submitButton.addEventListener('click', () => {
-  const currentGuess = newGuess.value;
-  newGuess.value = '';
+  let game = newGame();
 
+  const submitButton = document.getElementById('submit');
+  const hintButton = document.getElementById('hint');
+  const resetButton = document.getElementById('reset');
 
-});
+  submitButton.addEventListener('click', () => {
+    const currentGuess = +document.getElementById('player-input').value;
+    document.getElementById('player-input').value = '';
+  
+    game.playersGuessSubmission(currentGuess);
+  });
 
+  hintButton.addEventListener('click', () => {
+    document.querySelector('#guess-feedback').innerHTML = game.provideHint();
+  });
 
+  resetButton.addEventListener('click', () => {
+    game.pastGuesses = [];
+    game.playersGuessSubmission('reset');
+    game.winningNumber = generateWinningNumber();
+    for (let i = 1; i <= 5; i++) {
+      document.querySelector(`#guess-list li:nth-child(${i})`).innerHTML = `_`;
+    }
+  });
 }
 
 playGame();
