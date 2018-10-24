@@ -30,6 +30,9 @@ class Game {
       }
     }
   }
+  isLower() {
+    return this.playersGuess < this.winningNumber;
+  }
   checkGuess() {
     let message = '';
 
@@ -46,17 +49,17 @@ class Game {
         document.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`).innerHTML = this.playersGuess;
       }
       if (this.pastGuesses.length === 5 && this.playersGuess !== this.winningNumber) {
-          message = 'You Lose.';
+          message = `Oh no! The winning number was ${this.winningNumber}.`;
       } else if (this.playersGuess === this.winningNumber) {
           message = 'You Win!';
       } else if (difference < 10) {
-          message = 'You\'re burning up!';
+          message = this.isLower() ? 'You\'re burning up! Go higher!' : 'You\'re burning up! Go lower!'
       } else if (difference < 25) {
-          message = 'You\'re lukewarm.';
+          message = this.isLower() ? 'You\'re lukewarm. Go higher!' : 'You\'re lukewarm. Go lower!'
       } else if (difference < 50) {
-          message = 'You\'re a bit chilly.';
+          message = this.isLower() ? 'You\'re a bit chilly. Go higher!' : 'You\'re a bit chilly. Go lower!';
       } else {
-          message = 'You\'re ice cold!';
+          message =  this.isLower() ? 'You\'re ice cold! Go higher!' : 'You\'re ice cold! Go lower!' 
       }
     }
 
